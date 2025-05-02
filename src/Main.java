@@ -5,28 +5,25 @@ public class Main {
         Warrior warrior = new Warrior("Thorfin", 100);
         Mage mage = new Mage("Ezreal", 80);
 
-        Battle(warrior, mage);
+        startBattle(warrior, mage);
         System.out.println("Battle has concluded.");
     }
 
-    public static void Battle(Character fighter1, Character fighter2) {
+    public static void startBattle(Character fighter1, Character fighter2) {
+        printIntro(fighter1, "Hailing from the west");
+        printIntro(fighter2, "Representing the lands across eastern seas");
         String fighterOneName = fighter1.getName();
-        int fighterOneHP = fighter1.getHealth();
-        System.out.println("Hailing from the west, the warrior " + fighterOneName + 
-            " boasting a heart of " + fighterOneHP + 
-            " trenchmen, is eager to prove his prowess on the battlefield.");
-
         String fighterTwoName = fighter2.getName();
-        int fighterTwoHP = fighter2.getHealth();
-        System.out.println("Representing the lands across eastern seas, " + fighterTwoName +
-            " with a mind of " + fighterTwoHP +
-            " prophets, is ready to use his wit against any who dare.");
+
 
         boolean battleOngoing = true;
         Random random = new Random();
+        final int NUM_EVENTS = 4;
+
         System.out.println("Battle begins!");
         while(battleOngoing) {
-            int nextEvent = random.nextInt(4);
+            
+            int nextEvent = random.nextInt(NUM_EVENTS);
             switch(nextEvent) {
                 case 0:
                     fighter1.attack(fighter2);
@@ -43,14 +40,19 @@ public class Main {
                 default:
                     break;
             }    
-            if (fighter1.getHealth() <= 0) {
+            if (!fighter1.isAlive()) {
                 System.out.println(fighterOneName + " has fallen. " + fighterTwoName + " has claimed victory!");
                 battleOngoing = false;
             }
-            else if (fighter2.getHealth() <= 0) {
+            else if (!fighter2.isAlive()) {
                 System.out.println(fighterTwoName + " has fallen. " + fighterOneName + " is victorious!");
                 battleOngoing = false;
             }
         }
     }
+    public static void printIntro(Character fighter, String intro) {
+        System.out.println(intro + ", " + fighter.getName() +
+            " boasting a heart of " + fighter.getHealth() +
+            ", enters the battlefield with fierce determination.");
+    }    
 }

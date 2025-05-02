@@ -1,6 +1,6 @@
 public abstract class Character implements Attackable{
-    protected String name;
-    protected int health;
+    private String name;
+    private int health;
     protected int id;
 
     public Character(String name, int health) {
@@ -11,9 +11,14 @@ public abstract class Character implements Attackable{
     public int getHealth() {
         return health;
     }
-
+    public void setHealth(int health) {
+        this.health = health;
+    }
     public String getName() {
         return name;
+    }
+    public boolean isAlive() {
+        return health > 0;
     }
     
     public abstract void attack(Character target);
